@@ -1,4 +1,4 @@
-import collections
+from collections.abc import Iterable
 import itertools
 
 from . import constants
@@ -29,7 +29,7 @@ def render_content(content, **context):
     elif callable(content):
         for e in render_content(content(**context), **context):
             yield e
-    elif isinstance(content, collections.Iterable):
+    elif isinstance(content, Iterable):
         for e in render_iterable(content, **context):
             yield e
     else:
@@ -48,7 +48,7 @@ def render_iterable(content, **context):
         for e in render_tag(head, tail, **context):
             yield e
     # Render nested lists
-    elif isinstance(head, collections.Iterable):
+    elif isinstance(head, Iterable):
         for e in render_iterable(head, **context):
             yield e
         for content in tail:
